@@ -1,0 +1,19 @@
+services:
+  test:
+    build: .
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['0']
+              capabilities: [gpu]
+    ports:
+      - "5321:8888"
+      - "6400:0064"
+      - "2560:0256"
+      - "1687:7861"
+      - "0687:7860"
+      - "1235:22"
+    volumes:
+      - /mnt/lv_data/defilippis/:/opt/data/
