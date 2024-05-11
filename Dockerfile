@@ -11,4 +11,5 @@ RUN conda env create -f environment.yml
 # Set PATH environment variables
 ENV PATH /opt/conda/envs/env_name:$PATH 
 
+RUN jupyter lab
 
