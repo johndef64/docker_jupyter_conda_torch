@@ -1,15 +1,21 @@
-# Install anaconda
-FROM continuumio/anaconda
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
+ARG REGISTRY=quay.io
+ARG OWNER=jupyter
+ARG BASE_CONTAINER=$REGISTRY/$OWNER/scipy-notebook
+FROM $BASE_CONTAINER
 
-# Set working directory for the project
-WORKDIR /Path/to/working/directory/
+LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
 
-# Install packages to new conda environment
-COPY environment.yml .
-RUN conda env create -f environment.yml
+# Fix: https://github.com/hadolint/hadolint/wiki/DL4006
+# Fix: https://github.com/koalaman/shellcheck/wiki/SC3014
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Set PATH environment variables
-ENV PATH /opt/conda/envs/env_name:$PATH 
-
-RUN jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root
-
+# Install PyTorch with pip (https://pytorch.org/get-started/locally/)
+# hadolint ignore=DL3013
+RUN pip install --no-cache-dir --index-url 'https://download.pytorch.org/whl/cu118' \
+    'torch' \
+    'torchvision' \
+    'torchaudio'  && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
