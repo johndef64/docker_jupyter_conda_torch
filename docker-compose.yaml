@@ -16,4 +16,5 @@ services:
       - "0687:7860"
       - "1235:22"
     volumes:
-      - /mnt/lv_data/defilippis/:/home/jovyan/
+      - /mnt/lv_data/defilippis/:/home/jovyan/work
+    user: root           # specify user to ensure permissions

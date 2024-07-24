@@ -27,3 +27,16 @@ RUN pip install --no-cache-dir --index-url 'https://download.pytorch.org/whl/cu1
     'torchaudio'  && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
+
+######
+
+RUN apt update && apt install  openssh-server sudo -y
+
+RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 user
+
+RUN echo 'user:Iknos2023' | chpasswd
+
+RUN service ssh start
+
+EXPOSE 22
+CMD ["/bin/bash", "-c", "/usr/sbin/sshd && jupyter lab --ip='0.0.0.0' --port=8888 --no-browser --allow-root --notebook-dir=/opt/data"]
