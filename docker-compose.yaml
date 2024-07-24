@@ -17,4 +17,14 @@ services:
       - "1235:22"
     volumes:
       - /mnt/lv_data/defilippis/:/home/jovyan/work
+      #- /mnt/lv_data/defilippis/:/opt/data
     user: root           # specify user to ensure permissions
+    
+    environment:
+      - USERNAME=Iknos2023
+      - PASSWORD=!Kn0s2023@#
+    entrypoint: >
+      sh -c "echo '${USERNAME}:${PASSWORD}' | chpasswd && 
+             chmod -R ugo+rw /mnt/lv_data/defilippis/ && 
+             while true; do sleep 1000; done" 
+    user: root  # specify user to ensure permissions
