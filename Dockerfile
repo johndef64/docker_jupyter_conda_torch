@@ -30,10 +30,20 @@ RUN echo "${NB_USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 #######################################################
 #
-
+# Update and install necessary packages
+#RUN apt-get update && apt-get install -y sudo openssh-server
 RUN apt update && apt install  openssh-server sudo -y
 
+#possible Fix
+RUN groupmod -g 1001 node \
+  && usermod -u 1001 -g 1001 node
+
+# probleam 
 RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 user
+# => ERROR [5/7] RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 user           
+# > [5/7] RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 user:
+#0 0.335 useradd: UID 1000 is not unique
+
 
 RUN echo 'user:Iknos2023' | chpasswd
 
