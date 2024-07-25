@@ -21,32 +21,30 @@ RUN echo "${NB_USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # Install PyTorch with pip (https://pytorch.org/get-started/locally/)
 # hadolint ignore=DL3013
-#RUN pip install --no-cache-dir --index-url 'https://download.pytorch.org/whl/cu118' \
-#    'torch' \
-#    'torchvision' \
-#    'torchaudio'  && \
-#    fix-permissions "${CONDA_DIR}" && \
-#    fix-permissions "/home/${NB_USER}"
+RUN pip install --no-cache-dir --index-url 'https://download.pytorch.org/whl/cu118' \
+    'torch' \
+    'torchvision' \
+    'torchaudio'  && \
+    fix-permissions "${CONDA_DIR}" && \
+    fix-permissions "/home/${NB_USER}"
 
 #######################################################
 #
 # Update and install necessary packages
-RUN apt-get update && apt-get install -y sudo openssh-server
+#RUN apt-get update && apt-get install -y sudo openssh-server
 #RUN apt update && apt install  openssh-server sudo -y
 
 #possible Fix
 #RUN usermod -o -u 1000 <user>
-RUN usermod -o -u 1000 ${NB_USER}
 
-RUN useradd -rm -d /home/ubuntu -s /bin/bash -g ${NB_USER} -G sudo -u 1000 user
 #RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 user
 # => ERROR [5/7] RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 user:
 #0 0.335 useradd: UID 1000 is not unique
-
-
-RUN echo 'user:Iknos2023' | chpasswd
-
-RUN service ssh start
-
-EXPOSE 22
-CMD ["/bin/bash", "-c", "/usr/sbin/sshd && jupyter lab --ip='0.0.0.0' --port=8888 --no-browser --allow-root --notebook-dir=/opt/data"]
+#
+#
+#RUN echo 'user:Iknos2023' | chpasswd
+#
+#RUN service ssh start
+#
+#EXPOSE 22
+#CMD ["/bin/bash", "-c", "/usr/sbin/sshd && jupyter lab --ip='0.0.0.0' --port=8888 --no-browser --allow-root --notebook-dir=/opt/data"]
