@@ -28,8 +28,12 @@ RUN pip install --no-cache-dir --index-url 'https://download.pytorch.org/whl/cu1
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-######
+#######################################################
 #
+#SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+#USER root
+
 #RUN apt update && apt install  openssh-server sudo -y
 #
 #RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 user
