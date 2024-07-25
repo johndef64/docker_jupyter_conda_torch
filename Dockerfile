@@ -36,7 +36,7 @@ RUN apt-get update && apt-get install -y sudo openssh-server
 
 #possible Fix
 #RUN usermod -o -u 1000 <user>
-#RUN usermod -o -u 1000 ${NB_USER}
+RUN usermod -o -u 1000 ${NB_USER}
 
 RUN useradd -rm -d /home/ubuntu -s /bin/bash -g ${NB_USER} -G sudo -u 1000 user
 #RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 user
