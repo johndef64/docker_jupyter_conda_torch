@@ -9,12 +9,13 @@ services:
               device_ids: ['0']
               capabilities: [gpu]
     ports:
-      - "12345:8888"
-      - "0064:0064"
-      - "0256:0256"
-      - "2121:2121"
-      - "0687:7860"
-      - "1235:22"
+       - "6789:8888"
+      #- "12345:8888"
+      #- "0064:0064"
+      #- "0256:0256"
+      #- "2121:2121"
+      #- "0687:7860"
+      #- "1235:22"
     volumes:
       #- /mnt/lv_data/defilippis/:/home/jovyan/work
       - /mnt/lv_data/defilippis/:/opt/data
