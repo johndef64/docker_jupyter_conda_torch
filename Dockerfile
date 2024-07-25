@@ -35,8 +35,8 @@ RUN echo "${NB_USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 RUN apt update && apt install  openssh-server sudo -y
 
 #possible Fix
-RUN groupmod -g 1001 node \
-  && usermod -u 1001 -g 1001 node
+#RUN groupmod -g 1001 node  && usermod -u 1001 -g 1001 node
+RUN usermod -o -u 1000 <user>
 
 # probleam 
 RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 user
